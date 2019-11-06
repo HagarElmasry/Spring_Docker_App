@@ -1,0 +1,26 @@
+
+version: '3.7'
+services:     
+    
+    spring_rest:
+      build: .
+      image: springboot-image
+      ports:
+       - 8080:8080
+     
+    world_db:
+      image: ghusta/postgres-world-db:2.4
+      container_name: "world_postgres"
+      environment:
+        - POSTGRES_PASSWORD=world123
+        - POSTGRES_USER=world
+        - POSTGRES_DB=world-db
+      ports:
+       - "5432:5432"      
+      depends_on:
+        - spring_rest
+      volumes:
+       - ./world_data:/var/lib/postgresql/data
+
+   
+      
